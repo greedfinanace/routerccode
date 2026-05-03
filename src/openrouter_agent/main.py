@@ -1,5 +1,5 @@
 """
-RouterCode CLI — Main Entry Point
+RouterCode CLI - Main Entry Point
 
 OpenRouter-powered coding agent CLI with:
 - ReAct agentic loop with tool execution
@@ -49,7 +49,7 @@ from openrouter_agent.ui.theme import CATPPUCCIN_MOCHA_THEME, create_banner
 
 app = typer.Typer(
     name="routercode",
-    help="RouterCode — OpenRouter-powered coding agent CLI · 200+ models",
+    help="RouterCode - OpenRouter-powered coding agent CLI - 200+ models",
     add_completion=True,
     no_args_is_help=False,
     invoke_without_command=True,
@@ -187,7 +187,7 @@ async def handle_slash_command(
 
     elif command == "/help":
         table = Table(
-            title="⚡ Slash Commands",
+            title="[RUN] Slash Commands",
             border_style="#00f5d4",
             show_header=True,
             header_style="bold #00f5d4",
@@ -199,14 +199,14 @@ async def handle_slash_command(
         console.print(table)
 
     elif command == "/compact":
-        with console.status("[info]⏳ Compacting context…[/info]", spinner="dots"):
+        with console.status("[info][WAIT] Compacting context...[/info]", spinner="dots"):
             instructions = args if args else None
             await ctx_mgr.compact(instructions=instructions, client=client)
-            console.print("[success]✓ Context compacted[/success]")
+            console.print("[success][OK] Context compacted[/success]")
 
     elif command == "/clear":
         ctx_mgr.clear()
-        console.print("[warning]⚠ Context cleared — fresh start[/warning]")
+        console.print("[warning][WARN] Context cleared - fresh start[/warning]")
 
     elif command == "/mode":
         valid_modes = ["ask-first", "auto", "trust", "plan"]
@@ -230,7 +230,7 @@ async def handle_slash_command(
             if not favs:
                 console.print("[info]No favourite models yet. Use /favourite <model> or /favourite to add the current model.[/info]")
             else:
-                table = Table(title="⭐ Favourite Models", border_style="accent")
+                table = Table(title="[STAR] Favourite Models", border_style="accent")
                 table.add_column("Model ID", style="model_id")
                 for f in favs:
                     table.add_row(f)
@@ -239,7 +239,7 @@ async def handle_slash_command(
             target_model = args.strip()
             added = fav_mgr.toggle(target_model)
             if added:
-                console.print(f"[success]⭐ Added {target_model} to favourites[/success]")
+                console.print(f"[success][STAR] Added {target_model} to favourites[/success]")
             else:
                 console.print(f"[info]Removed {target_model} from favourites[/info]")
 
@@ -253,15 +253,15 @@ async def handle_slash_command(
         else:
             old_model = client.model
             client.model = args.strip()
-            console.print(f"[success]✓ Switched: {old_model} → {client.model}[/success]")
+            console.print(f"[success][OK] Switched: {old_model} -> {client.model}[/success]")
 
     elif command == "/models":
         query = args.strip()
-        with console.status(f"[info]⏳ Fetching models from OpenRouter…[/info]", spinner="dots"):
+        with console.status(f"[info][WAIT] Fetching models from OpenRouter...[/info]", spinner="dots"):
             try:
                 models = await client.list_models(query)
                 table = Table(
-                    title=f"🌐 OpenRouter Models{f' (filter: {query})' if query else ''}",
+                    title=f"[NET] OpenRouter Models{f' (filter: {query})' if query else ''}",
                     border_style="#00f5d4",
                     show_header=True,
                     header_style="bold #00f5d4",
@@ -280,7 +280,7 @@ async def handle_slash_command(
                     )
                 console.print(table)
                 if len(models) > 25:
-                    console.print(f"[dim]  … and {len(models) - 25} more. Use /models <query> to filter.[/dim]")
+                    console.print(f"[dim]  ... and {len(models) - 25} more. Use /models <query> to filter.[/dim]")
             except Exception as e:
                 console.print(f"[error]Failed to fetch models: {e}[/error]")
 
@@ -290,7 +290,7 @@ async def handle_slash_command(
     elif command == "/cost":
         cost = client.estimate_cost()
         table = Table(
-            title="💰 Session Cost (OpenRouter)",
+            title="[COST] Session Cost (OpenRouter)",
             border_style="#00f5d4",
             show_header=False,
         )
@@ -315,19 +315,19 @@ async def handle_slash_command(
     elif command == "/fork":
         name = args.strip() or None
         session_mgr.fork(name)
-        console.print("[success]✓ Conversation forked[/success]")
+        console.print("[success][OK] Conversation forked[/success]")
 
     elif command == "/export":
         filename = args.strip() or "session_export.txt"
         session_mgr.export(filename)
-        console.print(f"[success]✓ Exported to {filename}[/success]")
+        console.print(f"[success][OK] Exported to {filename}[/success]")
 
     elif command == "/memo":
         if not args:
             console.print("[warning]Usage: /memo <insight to remember>[/warning]")
         elif memory_mgr:
             memory_mgr.add_memory(args)
-            console.print(f"[success]✓ Saved to MEMORY.md[/success]")
+            console.print(f"[success][OK] Saved to MEMORY.md[/success]")
             # Also tell the LLM
             ctx_mgr.add_user_message(f"[System: User saved a memory note: {args}]")
         else:
@@ -368,7 +368,7 @@ async def handle_slash_command(
                 if m.id.lower() == potential_model.lower():
                     old_model = client.model
                     client.model = m.id
-                    console.print(f"[success]✓ Switched: {old_model} → {client.model}[/success]")
+                    console.print(f"[success][OK] Switched: {old_model} -> {client.model}[/success]")
                     found_model = True
                     break
         else:
@@ -376,7 +376,7 @@ async def handle_slash_command(
             if "/" in potential_model:
                 old_model = client.model
                 client.model = potential_model
-                console.print(f"[success]✓ Switched: {old_model} → {client.model}[/success]")
+                console.print(f"[success][OK] Switched: {old_model} -> {client.model}[/success]")
                 found_model = True
 
         if not found_model:
@@ -390,7 +390,7 @@ async def handle_slash_command(
 
 
 # ---------------------------------------------------------------------------
-# Agentic execution loop (Phase 1 — ReAct)
+# Agentic execution loop (Phase 1 - ReAct)
 # ---------------------------------------------------------------------------
 async def agentic_loop(
     query: str,
@@ -402,7 +402,7 @@ async def agentic_loop(
 ) -> None:
     """
     Core ReAct loop: Reason + Act cycle.
-    1. Token budget check → compact if needed
+    1. Token budget check -> compact if needed
     2. Stream API call via OpenRouter
     3. Parse tool calls
     4. Permission check
@@ -416,7 +416,7 @@ async def agentic_loop(
     for iteration in range(max_iterations):
         # 1. Token budget check
         if ctx_mgr.is_over_budget():
-            console.print("[warning]⚠ Context budget exceeded — auto-compacting…[/warning]")
+            console.print("[warning][WARN] Context budget exceeded - auto-compacting...[/warning]")
             await ctx_mgr.compact(client=client)
 
         # 2. Stream API call via OpenRouter
@@ -426,7 +426,7 @@ async def agentic_loop(
 
         if not print_mode:
             model_name = client.model.split('/')[-1]
-            live_context = Live(Spinner("dots", text=f"thinking ({model_name})…", style="tool_call"), console=console, transient=True)
+            live_context = Live(Spinner("dots", text=f"thinking ({model_name})...", style="tool_call"), console=console, transient=True)
         else:
             live_context = None
         
@@ -444,15 +444,15 @@ async def agentic_loop(
 
                 if chunk.get("type") == "reasoning":
                     if not reasoning_started:
-                        console.print(f"[dim]╭── 🧠 Internal Thought Process ({model_name})[/dim]")
+                        console.print(f"[dim]+-- [THINK] Internal Thought Process ({model_name})[/dim]")
                         reasoning_started = True
                     reasoning_text += chunk["content"]
                     console.print(chunk["content"], end="", markup=False, style="dim")
                 elif chunk.get("type") == "text":
                     if not text_started:
                         if reasoning_started:
-                            console.print("\n[dim]╰──[/dim]\n")
-                        console.print(f"[success]▶[/success] [bold]RouterCode:[/bold] ", end="")
+                            console.print("\n[dim]+--[/dim]\n")
+                        console.print(f"[success]>[/success] [bold]RouterCode:[/bold] ", end="")
                         text_started = True
                     response_text += chunk["content"]
                     console.print(chunk["content"], end="", markup=False)
@@ -489,18 +489,18 @@ async def agentic_loop(
             # Handle lazy tool loading (ToolSearchTool)
             if tool_name == "tool_search":
                 # Lazy tool loader handles this specially
-                console.print(f"  [tool_call]🔍 tool_search[/tool_call]")
+                console.print(f"  [tool_call][SEARCH] tool_search[/tool_call]")
                 requested = tool_params.get("tool_names", [])
                 ctx_mgr.add_tool_result(tool_call_id, tool_name, f"Loaded tools: {', '.join(requested)}")
                 continue
 
-            # Permission check — multi-mode with intent security
+            # Permission check - multi-mode with intent security
             if permission_mode == "plan":
                 if tool_name not in ("read_file", "search_files", "list_directory"):
                     ctx_mgr.add_tool_result(
                         tool_call_id, tool_name, "Permission denied: plan mode is read-only"
                     )
-                    console.print(f"[error]  ✗ {tool_name} blocked (plan mode)[/error]")
+                    console.print(f"[error]  [X] {tool_name} blocked (plan mode)[/error]")
                     continue
 
             elif permission_mode == "auto":
@@ -516,7 +516,7 @@ async def agentic_loop(
                     console.print(
                         Panel(
                             f"{detail}\n\n[dim]Reason: {reason}[/dim]",
-                            title=f"[bold]🛡️ Intent unclear: {tool_name}[/bold]",
+                            title=f"[bold][SAFE] Intent unclear: {tool_name}[/bold]",
                             border_style="warning",
                         )
                     )
@@ -524,7 +524,7 @@ async def agentic_loop(
                     if not approved:
                         ctx_mgr.add_tool_result(tool_call_id, tool_name, "User denied permission")
                         continue
-                # verdict == "allow" → proceed
+                # verdict == "allow" -> proceed
 
             elif permission_mode == "ask-first":
                 if tool_name in ("run_command", "apply_diff", "edit_lines", "write_file"):
@@ -532,7 +532,7 @@ async def agentic_loop(
                     console.print(
                         Panel(
                             detail,
-                            title=f"[bold]🔐 Permission: {tool_name}[/bold]",
+                            title=f"[bold][AUTH] Permission: {tool_name}[/bold]",
                             border_style="warning",
                         )
                     )
@@ -543,12 +543,12 @@ async def agentic_loop(
 
             from rich.status import Status
             # Execute
-            with Status(f"[tool_call]⚡ Executing {tool_name}[/tool_call]", spinner="dots", console=console, spinner_style="tool_call") as status:
+            with Status(f"[tool_call][RUN] Executing {tool_name}[/tool_call]", spinner="dots", console=console, spinner_style="tool_call") as status:
                 t0 = time.time()
                 result = await tool_executor.execute(tool_name, tool_params)
                 elapsed = time.time() - t0
                 ctx_mgr.add_tool_result(tool_call_id, tool_name, result)
-            console.print(f"  [success]✓[/success] [dim]{tool_name} completed in {elapsed:.1f}s[/dim]")
+            console.print(f"  [success][OK][/success] [dim]{tool_name} completed in {elapsed:.1f}s[/dim]")
 
     else:
         console.print(Panel(
@@ -615,11 +615,11 @@ async def interactive_repl(
         memory_context = memory_mgr.load()
         if memory_context:
             ctx_mgr.add_user_message(f"[System: Project memory loaded]\n{memory_context}")
-            console.print("  [success]📋 Project memory loaded[/success]")
+            console.print("  [success][MEM] Project memory loaded[/success]")
 
     # Check for remote notification channels
     notifier = get_notifier()
-    remote_status = "📱 Connected" if notifier.enabled else "—"
+    remote_status = "[REMOTE] Connected" if notifier.enabled else "-"
 
     # Kick off a background task to fetch models so autocomplete works instantly
     asyncio.create_task(client.list_models())
@@ -628,11 +628,11 @@ async def interactive_repl(
     console.print(
         f"  [info]Model:[/info]   [bold]{client.model}[/bold]\n"
         f"  [info]Mode:[/info]    {permission_mode}\n"
-        f"  [info]Session:[/info] {session_mgr.session_id[:8]}…\n"
+        f"  [info]Session:[/info] {session_mgr.session_id[:8]}...\n"
         f"  [info]API:[/info]     [bold #00f5d4]OpenRouter[/bold #00f5d4] (openrouter.ai)\n"
         f"  [info]Remote:[/info]  {remote_status}\n"
     )
-    console.print("[dim]  Type /help for commands · /models to browse · Ctrl+C to interrupt[/dim]\n")
+    console.print("[dim]  Type /help for commands - /models to browse - Ctrl+C to interrupt[/dim]\n")
 
     # Set up prompt_toolkit session for history and autocomplete
     history_file = Path.home() / ".routercode_history"
@@ -651,10 +651,10 @@ async def interactive_repl(
         cost_str = f"${cost.get('total_cost_usd', 0):.4f}"
         
         return HTML(
-            f" <b>workspace:</b> <style fg='#89b4fa'>{cwd}</style> │ "
-            f" <b>mode:</b> <style fg='#f38ba8'>{permission_mode}</style> │ "
-            f" <b>model:</b> <style fg='#a6e3a1'>{client.model}</style> │ "
-            f" <b>context:</b> <style fg='#bac2de'>{tokens}tk</style> │ "
+            f" <b>workspace:</b> <style fg='#89b4fa'>{cwd}</style> | "
+            f" <b>mode:</b> <style fg='#f38ba8'>{permission_mode}</style> | "
+            f" <b>model:</b> <style fg='#a6e3a1'>{client.model}</style> | "
+            f" <b>context:</b> <style fg='#bac2de'>{tokens}tk</style> | "
             f" <b>cost:</b> <style fg='#fab387'>{cost_str}</style> "
         )
     
@@ -668,7 +668,7 @@ async def interactive_repl(
         try:
             # Use prompt_toolkit instead of rich console.input
             query = await prompt_session.prompt_async(
-                HTML("<style fg='#cba6f7'>▶</style> <style fg='#bac2de'><b>RouterCode</b></style> <style fg='#cba6f7'>❯ </style>"),
+                HTML("<style fg='#cba6f7'>></style> <style fg='#bac2de'><b>RouterCode</b></style> <style fg='#cba6f7'>> </style>"),
                 placeholder=HTML("<style fg='#6c7086'>Type a request, or /help for commands...</style>"),
                 bottom_toolbar=get_bottom_toolbar
             )
@@ -695,10 +695,10 @@ async def interactive_repl(
                 break
             elif isinstance(result, str) and result.startswith("MODE_SWITCH:"):
                 permission_mode = result.split(":")[1]
-                console.print(f"[success]✓ Switched permission mode to: {permission_mode}[/success]")
+                console.print(f"[success][OK] Switched permission mode to: {permission_mode}[/success]")
             continue
 
-        # Normal query → agentic loop
+        # Normal query -> agentic loop
         try:
             await agentic_loop(
                 query, ctx_mgr, client, tool_executor, permission_mode
@@ -745,7 +745,7 @@ def main(
     ),
     version: bool = typer.Option(False, "--version", "-v", help="Show version"),
 ) -> None:
-    """RouterCode — OpenRouter-powered coding agent CLI."""
+    """RouterCode - OpenRouter-powered coding agent CLI."""
     if version:
         console.print(f"[info]routercode v{__version__}[/info]")
         console.print("[dim]API: OpenRouter (openrouter.ai)[/dim]")
@@ -785,13 +785,13 @@ def main(
     else:
         session_mgr.create_new()
 
-    # Core components — OpenRouter client (NOT OpenAI!)
+    # Core components - OpenRouter client (NOT OpenAI!)
     client = OpenRouterClient(api_key=api_key, model=model)
     ctx_mgr = ContextManager(session=session_mgr)
     tool_executor = ToolExecutor(working_dir=Path.cwd())
     memory_mgr = MemoryManager(project_root=Path.cwd())
 
-    # Wire tool definitions — with lazy loading if too many
+    # Wire tool definitions - with lazy loading if too many
     tool_loader = LazyToolLoader(TOOL_DEFINITIONS)
     ctx_mgr.tool_definitions = tool_loader.get_active_tools()
 
@@ -829,7 +829,7 @@ def models(
         client = OpenRouterClient(api_key=api_key)
         results = await client.list_models(query or "")
         table = Table(
-            title=f"🌐 OpenRouter Models{f' ({query})' if query else ''}",
+            title=f"[NET] OpenRouter Models{f' ({query})' if query else ''}",
             border_style="#00f5d4",
             show_header=True,
             header_style="bold #00f5d4",
@@ -842,7 +842,7 @@ def models(
             ctx_str = f"{m.context_length // 1000}K" if m.context_length else "?"
             table.add_row(m.id, ctx_str, f"${m.pricing_prompt:.2f}", f"${m.pricing_completion:.2f}")
         console.print(table)
-        console.print(f"\n[dim]{len(results)} models available · Use: routercode --model <id>[/dim]")
+        console.print(f"\n[dim]{len(results)} models available - Use: routercode --model <id>[/dim]")
         await client.close()
 
     asyncio.run(_list())
@@ -862,7 +862,7 @@ def update(
     console.print(f"[info]Updating: {' '.join(cmd)}[/info]")
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode == 0:
-        console.print("[success]✓ Update complete[/success]")
+        console.print("[success][OK] Update complete[/success]")
     else:
         console.print(f"[error]Update failed:\n{result.stderr}[/error]")
 

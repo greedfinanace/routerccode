@@ -1,5 +1,5 @@
 """
-Lazy Tool Loader — MCP Tool Search & Dynamic Loading.
+Lazy Tool Loader - MCP Tool Search & Dynamic Loading.
 
 When tool definitions exceed 10% of the context window,
 instead of sending all tool schemas to the LLM, we send only
@@ -39,7 +39,7 @@ class LazyToolLoader:
         self._active_tools: set[str] = set()
 
     def _build_index(self) -> dict[str, dict[str, Any]]:
-        """Build a name→tool mapping for quick lookup."""
+        """Build a name->tool mapping for quick lookup."""
         index = {}
         for tool in self.all_tools:
             name = tool.get("function", {}).get("name", "")
@@ -58,7 +58,7 @@ class LazyToolLoader:
 
     def get_tool_search_definition(self) -> dict[str, Any]:
         """
-        Return the ToolSearchTool definition — a meta-tool
+        Return the ToolSearchTool definition - a meta-tool
         that lets the agent discover and load other tools.
         """
         # Build searchable catalog
@@ -106,7 +106,7 @@ class LazyToolLoader:
             if name in self._tool_index:
                 loaded.append(self._tool_index[name])
                 self._active_tools.add(name)
-                console.print(f"  [tool_call]📦 Loaded tool: {name}[/tool_call]")
+                console.print(f"  [tool_call] Loaded tool: {name}[/tool_call]")
             else:
                 console.print(f"  [warning]Tool not found: {name}[/warning]")
         return loaded

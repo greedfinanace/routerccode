@@ -1,7 +1,7 @@
 """
 Secure API Key Manager
 
-Tiered key storage: CLI flag → ENV var → keyring → prompt user.
+Tiered key storage: CLI flag -> ENV var -> keyring -> prompt user.
 """
 
 from __future__ import annotations
@@ -47,7 +47,7 @@ class APIKeyManager:
     def mask(key: str) -> str:
         if len(key) < 12:
             return "****"
-        return f"{key[:8]}…****…{key[-4:]}"
+        return f"{key[:8]}...****...{key[-4:]}"
 
     @staticmethod
     def sanitize_env() -> dict[str, str]:
@@ -75,7 +75,7 @@ class APIKeyManager:
             return None
         try:
             keyring.set_password(SERVICE_NAME, KEY_ACCOUNT, key)
-            console.print(f"[green]✓ API key stored in system keychain[/green]")
+            console.print(f"[green][OK] API key stored in system keychain[/green]")
         except Exception as e:
-            console.print(f"[yellow]⚠ Keychain unavailable ({e})[/yellow]")
+            console.print(f"[yellow][!] Keychain unavailable ({e})[/yellow]")
         return key

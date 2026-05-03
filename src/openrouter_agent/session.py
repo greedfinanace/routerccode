@@ -1,5 +1,5 @@
 """
-Session Manager — Persistent session storage & management.
+Session Manager - Persistent session storage & management.
 
 Handles session creation, continuation (-c), resumption (-r),
 forking, and export. Sessions are stored as JSON files.

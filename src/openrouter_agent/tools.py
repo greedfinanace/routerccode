@@ -1,5 +1,5 @@
 """
-Tool Execution Engine — Surgical edits & safe command execution.
+Tool Execution Engine - Surgical edits & safe command execution.
 
 Implements pydantic-validated tool schemas:
   - apply_diff: search-and-replace editing
@@ -309,7 +309,7 @@ class ToolExecutor:
         entries = sorted(p.iterdir(), key=lambda x: (not x.is_dir(), x.name))
         lines = []
         for entry in entries[:100]:
-            prefix = "📁 " if entry.is_dir() else "📄 "
+            prefix = "[DIR] " if entry.is_dir() else "[FILE] "
             lines.append(f"{prefix}{entry.name}")
         return "\n".join(lines) if lines else "(empty directory)"
 

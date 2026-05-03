@@ -1,5 +1,5 @@
 """
-Memory Manager — Persistent Project Memory ("Shared Brain").
+Memory Manager - Persistent Project Memory ("Shared Brain").
 
 Implements the 2026 persistence paradigm:
   - ROUTERCODE.md: Manual project DNA (build commands, style rules, architecture)
@@ -140,7 +140,7 @@ class MemoryManager:
                     f"{summary}\n",
                     encoding="utf-8",
                 )
-                console.print("[success]✓ Memory consolidated via Auto-Dream[/success]")
+                console.print("[success][OK] Memory consolidated via Auto-Dream[/success]")
             except Exception as e:
                 console.print(f"[warning]Auto-Dream failed: {e}[/warning]")
                 self._simple_trim()
@@ -157,7 +157,7 @@ class MemoryManager:
 
     def generate_routercode_template(self) -> str:
         """Generate a starter ROUTERCODE.md by scanning the project."""
-        template = "# ROUTERCODE.md — Project DNA\n\n"
+        template = "# ROUTERCODE.md - Project DNA\n\n"
         template += "_This file is read by RouterCode at the start of every session._\n\n"
 
         # Detect build system
@@ -197,5 +197,5 @@ class MemoryManager:
 
         template = self.generate_routercode_template()
         self._routercode_path.write_text(template, encoding="utf-8")
-        console.print(f"[success]✓ Created {self._routercode_path}[/success]")
+        console.print(f"[success][OK] Created {self._routercode_path}[/success]")
         console.print("[dim]  Edit this file to teach RouterCode your project's DNA.[/dim]")

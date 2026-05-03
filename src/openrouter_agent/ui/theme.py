@@ -1,5 +1,5 @@
 """
-Rich Terminal UI Theme — Catppuccin Mocha Aesthetic.
+Rich Terminal UI Theme - Catppuccin Mocha Aesthetic.
 
 The visual identity of the OpenRouter Agent CLI:
   - #cba6f7 (mauve) primary accent
@@ -44,7 +44,7 @@ def create_banner() -> Text:
         "$$ |      $$    $$/ $$    $$/   $$  $$/ $$       |$$ |            $$       |$$    $$/ $$    $$ |$$       |",
         "$$/        $$$$$$/   $$$$$$/     $$$$/   $$$$$$$/ $$/              $$$$$$$/  $$$$$$/   $$$$$$$/  $$$$$$$/ ",
         "                                                                                                          ",
-        "              Production-grade coding assistant · Vibecoding Era · Powered by OpenRouter                  "
+        "              Production-grade coding assistant - Vibecoding Era - Powered by OpenRouter                  "
     ]
 
     colors = [

@@ -1,5 +1,5 @@
 """
-Subagent System — Fan-Out Parallel Task Delegation.
+Subagent System - Fan-Out Parallel Task Delegation.
 
 Implements the 2026 "Fan-Out" pattern:
   - Orchestrator dispatches specialized subagents
@@ -99,7 +99,7 @@ class Subagent:
         """Run the subagent on a specific task."""
         self.status = "running"
         console.print(
-            f"  [tool_call]🔀 Subagent [{self.config.name}][/tool_call] "
+            f"  [tool_call][SUB] Subagent [{self.config.name}][/tool_call] "
             f"[dim]({self.config.role})[/dim]"
         )
 
@@ -135,7 +135,7 @@ class Subagent:
             self.client.model = old_model
 
         console.print(
-            f"  [success]✓ Subagent [{self.config.name}] complete[/success]"
+            f"  [success][OK] Subagent [{self.config.name}] complete[/success]"
         )
         return self.result
 
@@ -187,7 +187,7 @@ class SubagentOrchestrator:
         """
         console.print(
             Panel(
-                f"[bold]Dispatching {len(tasks)} subagents…[/bold]",
+                f"[bold]Dispatching {len(tasks)} subagents...[/bold]",
                 border_style="#00f5d4",
             )
         )
@@ -211,7 +211,7 @@ class SubagentOrchestrator:
 
         # Display summary
         table = Table(
-            title="🔀 Subagent Results",
+            title="[SUB] Subagent Results",
             border_style="#00f5d4",
             show_header=True,
             header_style="bold #00f5d4",
@@ -220,9 +220,9 @@ class SubagentOrchestrator:
         table.add_column("Status")
         table.add_column("Result Preview", max_width=60)
         for agent, _ in agents:
-            status_icon = "✓" if agent.status == "done" else "✗"
+            status_icon = "[OK]" if agent.status == "done" else "[X]"
             color = "green" if agent.status == "done" else "red"
-            preview = agent.result[:100] + "…" if len(agent.result) > 100 else agent.result
+            preview = agent.result[:100] + "..." if len(agent.result) > 100 else agent.result
             table.add_row(
                 agent.config.role,
                 f"[{color}]{status_icon}[/{color}]",
@@ -264,13 +264,13 @@ class SubagentOrchestrator:
                 text=True,
             )
             if result.returncode == 0:
-                console.print(f"[success]✓ Created worktree: {worktree_dir}[/success]")
+                console.print(f"[success][OK] Created worktree: {worktree_dir}[/success]")
                 return worktree_dir
             else:
                 console.print(f"[error]Worktree creation failed: {result.stderr}[/error]")
                 return None
         except FileNotFoundError:
-            console.print("[warning]Git not found — worktree unavailable[/warning]")
+            console.print("[warning]Git not found - worktree unavailable[/warning]")
             return None
 
     def cleanup_worktree(self, branch_name: str) -> None:

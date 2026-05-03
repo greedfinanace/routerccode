@@ -1,5 +1,5 @@
 """
-Update Checker — Over-the-air update detection.
+Update Checker - Over-the-air update detection.
 
 Checks GitHub releases for newer versions and notifies the user.
 """

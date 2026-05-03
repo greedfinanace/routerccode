@@ -1,5 +1,5 @@
 """
-Self-Healing Loop — Autonomous test-fix-test debugging.
+Self-Healing Loop - Autonomous test-fix-test debugging.
 
 Runs a test command, captures errors, feeds them back to the LLM
 for auto-repair, with a circuit breaker to prevent infinite loops.
@@ -47,7 +47,7 @@ async def self_healing_loop(
 
         # Check if tests passed
         if "[exit code: 0]" in result:
-            console.print("[success]✓ Tests passed![/success]")
+            console.print("[success][OK] Tests passed![/success]")
             return True
 
         # Parse error
@@ -64,7 +64,7 @@ async def self_healing_loop(
 
         console.print(
             f"[warning]Attempt {attempt + 1}/{max_attempts}: "
-            f"Tests failed, asking LLM to fix…[/warning]"
+            f"Tests failed, asking LLM to fix...[/warning]"
         )
 
         # Feed error back to LLM

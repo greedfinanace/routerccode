@@ -1,5 +1,5 @@
 """
-Remote Orchestration Hook — Telegram/Discord notifications for long tasks.
+Remote Orchestration Hook - Telegram/Discord notifications for long tasks.
 
 When RouterCode is running self-heal loops, ultrareview, or other
 long-running tasks, this module sends status updates to the user's
@@ -126,14 +126,14 @@ class RemoteNotifier:
     async def notify_task_start(self, task_name: str) -> None:
         """Notify that a long-running task has started."""
         await self.notify(
-            f"🚀 *RouterCode* — Task started\n"
+            f"*RouterCode* - Task started\n"
             f"```\n{task_name}\n```"
         )
 
     async def notify_task_progress(self, task_name: str, progress: str) -> None:
         """Send progress update for a running task."""
         await self.notify(
-            f"⏳ *RouterCode* — Progress\n"
+            f"*RouterCode* - Progress\n"
             f"Task: {task_name}\n"
             f"```\n{progress}\n```"
         )
@@ -142,7 +142,7 @@ class RemoteNotifier:
         """Notify that a task completed."""
         preview = result[:500] if len(result) > 500 else result
         await self.notify(
-            f"✅ *RouterCode* — Complete\n"
+            f"*RouterCode* - Complete\n"
             f"Task: {task_name}\n"
             f"```\n{preview}\n```"
         )
@@ -150,7 +150,7 @@ class RemoteNotifier:
     async def notify_task_error(self, task_name: str, error: str) -> None:
         """Notify that a task failed."""
         await self.notify(
-            f"❌ *RouterCode* — Error\n"
+            f"*RouterCode* - Error\n"
             f"Task: {task_name}\n"
             f"```\n{error[:500]}\n```"
         )
@@ -162,12 +162,12 @@ class RemoteNotifier:
         """
         if self.telegram_token:
             await self.send_telegram_with_buttons(
-                f"🔐 *RouterCode* — Permission Request\n"
+                f"[AUTH] *RouterCode* - Permission Request\n"
                 f"```\n{action_desc}\n```\n"
                 f"Reply /approve or /deny",
-                [("✅ Approve", "approve"), ("❌ Deny", "deny")],
+                [("Approve", "approve"), ("Deny", "deny")],
             )
-            console.print("[dim]  📱 Permission request sent to Telegram[/dim]")
+            console.print("[dim]  [REMOTE] Permission request sent to Telegram[/dim]")
             # In a full implementation, we'd listen for callback via webhook
             # For now, fall back to terminal
             return True

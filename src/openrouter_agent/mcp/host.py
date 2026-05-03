@@ -1,5 +1,5 @@
 """
-MCP Host — Model Context Protocol host implementation.
+MCP Host - Model Context Protocol host implementation.
 
 Manages lifecycle of MCP server child processes, communicating
 via JSON-RPC 2.0 over stdio. Supports dynamic tool discovery
@@ -112,7 +112,7 @@ class MCPHost:
         return await server.call_tool(tool_name, params)
 
     async def discover_all_tools(self) -> list[dict[str, Any]]:
-        """Query all servers for available tools → OpenAI function format."""
+        """Query all servers for available tools -> OpenAI function format."""
         all_tools = []
         for server_name, server in self.servers.items():
             tools = await server.list_tools()

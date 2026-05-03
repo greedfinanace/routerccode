@@ -1,5 +1,5 @@
 """
-Codebase Mapping — AST-based repository skeleton generation.
+Codebase Mapping - AST-based repository skeleton generation.
 
 Generates a compressed codebase map by parsing Python ASTs to extract
 class and function signatures, producing a token-efficient overview.

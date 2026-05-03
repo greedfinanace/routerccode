@@ -64,7 +64,7 @@ class OpenRouterClient:
     """
     Async client for OpenRouter chat completions.
 
-    This is NOT an OpenAI client — it uses OpenRouter-specific headers,
+    This is NOT an OpenAI client - it uses OpenRouter-specific headers,
     provider routing, model discovery, and cost tracking.
     """
 
@@ -111,7 +111,7 @@ class OpenRouterClient:
     async def list_models(self, query: str = "") -> list[ModelInfo]:
         """
         Fetch available models from OpenRouter's /models endpoint.
-        This is an OpenRouter-exclusive feature — OpenAI doesn't expose this.
+        This is an OpenRouter-exclusive feature - OpenAI doesn't expose this.
         """
         client = await self._get_client()
         resp = await client.get("/models")
@@ -229,7 +229,7 @@ class OpenRouterClient:
                     json=body,
                 ) as response:
                     if response.status_code == 429:
-                        # OpenRouter rate limit — back off
+                        # OpenRouter rate limit - back off
                         wait = RETRY_BASE_DELAY * (2 ** attempt)
                         yield {"type": "text", "content": f"\n[rate limited, retrying in {wait:.0f}s...]\n"}
                         await asyncio.sleep(wait)
@@ -247,7 +247,7 @@ class OpenRouterClient:
                                 del body["tools"]
                             if "tool_choice" in body:
                                 del body["tool_choice"]
-                            yield {"type": "text", "content": "\n[dim]⚠ Model does not support tools. Falling back to text-only mode...[/dim]\n"}
+                            yield {"type": "text", "content": "\n[dim][!] Model does not support tools. Falling back to text-only mode...[/dim]\n"}
                             continue
                             
                         raise
@@ -331,7 +331,7 @@ class OpenRouterClient:
                                 }
                             tool_call_buffer.clear()
 
-                    # Success — break retry loop
+                    # Success - break retry loop
                     break
 
             except httpx.HTTPStatusError as e:

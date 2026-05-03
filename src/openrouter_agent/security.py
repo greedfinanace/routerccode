@@ -1,12 +1,12 @@
 """
-Intent Security Classifier — Two-stage Auto Mode safety layer.
+Intent Security Classifier - Two-stage Auto Mode safety layer.
 
 Implements the intent-based security model from the 2026 paradigm:
-  Stage 1: Fast filter (~64 tokens) — block obvious dangers
-  Stage 2: Contextual LLM check (~4K tokens) — intent alignment
+  Stage 1: Fast filter (~64 tokens) - block obvious dangers
+  Stage 2: Contextual LLM check (~4K tokens) - intent alignment
   
 The classifier answers: "Does this action serve the user's request?"
-If yes → execute. If no → fall back to ask-first mode.
+If yes -> execute. If no -> fall back to ask-first mode.
 """
 
 from __future__ import annotations
@@ -191,10 +191,10 @@ class IntentSecurityClassifier:
         if verdict == "allow":
             return ("allow", reason)
         if verdict == "block":
-            console.print(f"[error]🛡️ BLOCKED: {reason}[/error]")
+            console.print(f"[error][SAFE] BLOCKED: {reason}[/error]")
             return ("block", reason)
 
-        # Stage 2 — only for "review" verdicts
+        # Stage 2 - only for "review" verdicts
         approved, intent_reason = await self.intent_check(
             tool_name, params, user_request, client
         )

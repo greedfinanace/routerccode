@@ -1,5 +1,5 @@
 """
-Context Manager — Token management & 4-layer compression pipeline.
+Context Manager - Token management & 4-layer compression pipeline.
 
 Implements the multi-layer compaction strategy from the master prompt:
   Layer 1: Deterministic micro-compaction (truncation)
@@ -21,7 +21,7 @@ from rich.progress_bar import ProgressBar
 
 SYSTEM_PROMPT = """You are an expert coding assistant operating through the OpenRouter Agent CLI.
 You have access to tools for reading files, editing files, running commands, and searching codebases.
-Always reason step-by-step before acting. Use tools surgically — prefer targeted edits over full rewrites.
+Always reason step-by-step before acting. Use tools surgically - prefer targeted edits over full rewrites.
 When you're done with a task, explain what you did concisely."""
 
 MAX_CONTEXT_TOKENS = 128_000
