@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.venv/
+env/
+venv/
+.env
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Node
+node_modules/
+package-lock.json
+bun.lockb
+
+# OS
+.DS_Store
+Thumbs.db

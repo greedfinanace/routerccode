@@ -1,0 +1,26 @@
+{
+  "name": "routercode",
+  "version": "0.1.0",
+  "description": "Production-grade CLI coding agent powered by OpenRouter",
+  "main": "bin/routercode.js",
+  "bin": {
+    "routercode": "bin/routercode.js"
+  },
+  "scripts": {
+    "postinstall": "pip install ."
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "coding",
+    "cli",
+    "openrouter",
+    "automation"
+  ],
+  "author": "ReouterCodeCLI",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/greedfinanace/routerccode.git"
+  }
+}
