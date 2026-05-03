@@ -23,16 +23,16 @@ Install directly using pip:
 pip install .
 ```
 
-### Option 2: NPM
-Install globally using npm:
+### Option 2: NPM (Direct)
+Install globally from GitHub:
 ```bash
-npm install -g .
+npm install -g greedfinanace/routerccode
 ```
 
-### Option 3: Bun
-Install globally using bun:
+### Option 3: Bun (Direct)
+Install globally from GitHub:
 ```bash
-bun install -g .
+bun install -g greedfinanace/routerccode
 ```
 
 ## 🚀 Quick Start
