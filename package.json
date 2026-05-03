@@ -19,6 +19,12 @@
   ],
   "author": "ReouterCodeCLI",
   "license": "MIT",
+  "files": [
+    "bin/",
+    "src/",
+    "pyproject.toml",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/greedfinanace/routerccode.git"
